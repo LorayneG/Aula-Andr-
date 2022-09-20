@@ -76,3 +76,36 @@ insert into vendas (nota_fiscal, data, produto_id) values ('0003', '2022-09-11',
 insert into vendas (nota_fiscal, data, produto_id) values ('0003', '2022-09-11', 6);
 insert into vendas (nota_fiscal, data, produto_id) values ('0004', '2022-09-13', 4);
 
+-- Exercícios
+-- inner join das três tabelas
+-- proposição: fazer uma consulta que resulte o nome da categoria, o nome do produto,
+-- o número da nota fiscal, a data e o valor do produto.
+
+  SELECT  c.nome  AS 'categoria', 
+          p.nome 	AS 'produto', 
+          v.nota_fiscal, 
+          v.data, 
+          p.valor
+  FROM produtos p
+  inner join categorias c ON p.categoria_id = c.id
+  inner join vendas v ON v.produto_id = p.id;
+
+-- 1) Retorne o nome da categoria onde esta cadastrado o produto 'mouse'.
+    select nome from produtos
+    where nome = 'mouse';
+    
+-- 2) Retorne todos os produtos cadastrados na categoria 'escritorio'
+    select * from categorias
+    where nome = 'escritorio';
+   
+-- 3) Retorne todas as categorias que tenham produtos com valor maior ou igual a 80
+
+
+-- 4) Retorne uma listagem em ordem alfabética contendo a categoria, nome do produto e valor
+-- em ordem alfabética de categoria e depois produto
+
+
+
+
+
+
