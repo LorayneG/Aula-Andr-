@@ -45,8 +45,11 @@ FROM produtos
 INNER JOIN categorias ON produtos.categoria_id = categorias.id;
 
 
-select C.nome as 'categoria_nome', P.nome as 'produto_nome', P.valor
-from produtos P inner join categorias C on P.categoria_id = C.id;
+select C.nome as 'categoria_nome', 
+       P.nome as 'produto_nome', 
+       P.valor
+from produtos P 
+inner join categorias C on P.categoria_id = C.id;
 
 
 create table vendas (
@@ -81,14 +84,14 @@ insert into vendas (nota_fiscal, data, produto_id) values ('0004', '2022-09-13',
 -- proposição: fazer uma consulta que resulte o nome da categoria, o nome do produto,
 -- o número da nota fiscal, a data e o valor do produto.
 
-  SELECT  c.nome  AS 'categoria', 
-          p.nome 	AS 'produto', 
-          v.nota_fiscal, 
-          v.data, 
+  SELECT  c.nome as 'categoria_nome',
+          p.nome as 'produto_nome', 
+          v.nota_fiscal as 'venda_nota_fiscal', 
+          v.data as 'venda_data', 
           p.valor
   FROM produtos p
-  inner join categorias c ON p.categoria_id = c.id
-  inner join vendas v ON v.produto_id = p.id;
+  inner join categorias c on p.categoria_id = c.id
+  inner join vendas v on v.produto_id = p.id;
 
 -- 1) Retorne o nome da categoria onde esta cadastrado o produto 'mouse'.
     select nome from produtos
