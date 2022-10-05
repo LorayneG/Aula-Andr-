@@ -40,5 +40,43 @@ select cidade from alugueis
 where id >= 2
 order by cidade asc;
 
+drop table vendedores;
+
+-- create table
+create table vendedores (
+	id int primary key auto_increment,
+    nome varchar(200)
+);
+
+drop table vendas;
+
+create table vendas (
+  id int(11) not null auto_increment,
+  nome varchar(200) NOT NULL,
+  vendedor_id int(11),
+  primary key (id),
+  foreign key (vendedor_id) references vendedores(id)
+);
+
+-- insert vendedores
+insert into vendedores (nome) values ('André');
+insert into vendedores (nome) values ('Pedro');
+insert into vendedores (nome) values ('João');
+
+-- insert vendas
+insert into vendas (nome, vendedor_id) values ('Venda 1', 1);
+insert into vendas (nome, vendedor_id) values ('Venda 2', 1);
+insert into vendas (nome, vendedor_id) values ('Venda 3', 1);
+insert into vendas (nome, vendedor_id) values ('Venda 4', 2);
+insert into vendas (nome, vendedor_id) values ('Venda 5', 2);
+insert into vendas (nome, vendedor_id) values ('Venda 6', 3);
+
+-- desejo ordenar os vendedores começando pelo com o maior número de vendas
+select vendedores.nome, count(vendas.id) as QuantidadeDeVendas from vendas 
+inner join vendedores on vendas.vendedor_id = vendedores.id
+group by vendedores.nome
+order by count(vendas.id) desc;
+   
+
 
 
