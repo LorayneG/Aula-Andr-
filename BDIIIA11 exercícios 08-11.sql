@@ -1,25 +1,25 @@
 -- BDIIIA11 - exercícios
 
-drop database bd3;
-create database bd3;
+DROP DATABASE bd3;
+CREATE DATABASE bd3;
 
-use bd3;
+USE bd3;
 
 -- create table
-create table clientes (
-  id int(11) not null primary key auto_increment,
-  cpf varchar(20) not null,
-  nome varchar(200) not null,
-  cidade varchar(200) not null,
-  email varchar(200) not null
+CREATE TABLE clientes (
+  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  cpf varchar(20) NOT NULL,
+  nome varchar(200) NOT NULL,
+  cidade varchar(200) NOT NULL,
+  email varchar(200) NOT NULL
 );
 
 CREATE TABLE solicitacoes (
-  id int(11) not null primary key auto_increment,
-  nome varchar(80) not null,
-  data timestamp not null,
-  cliente_id int(11) not null,
-  constraint foreign key (cliente_id) references clientes(id)
+  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nome varchar(80) NOT NULL,
+  data timestamp NOT NULL,
+  cliente_id int(11) NOT NULL,
+  CONSTRAINT FOREIGN KEY (cliente_id) REFERENCES clientes(id)
 );
 
 -- insert clientes
@@ -38,33 +38,43 @@ insert into solicitacoes (nome, data, cliente_id) values ('Sumiu meu mouse', NOW
 
 -- 1) Crie um relatório que possua a quantidade de solicitações por usuários
 -- O relatório deve conter os seguintes campos: nome do cliente, quantidade de solicitacoes
-
+ select clientes.nome, count(solicitacoes.id) 
+ as QuantidadeDeSolicitacoes 
+ from solicitacoes
+ inner join clientes 
+ on solicitacoes.cliente_id = clientes.id
+ group by clientes.nome
+ having  count(solicitacoes.id)  >= 1
+ order by count( solicitacoes.id) desc;
 
 
 -- 2) Crie o relatório acima ordenando em ordem decrescente de solicitações
-select clientes_id, count(id)
-from solicitacoes
-group by clientes_id
-having count(id) >= 2
-order by count(id) desc; 
-
+ select clientes.nome, count(solicitacoes.id) 
+ as QuantidadeDeSolicitacoes 
+ from solicitacoes
+ inner join clientes 
+ on solicitacoes.cliente_id = clientes.id
+ group by clientes.nome
+ having  count(solicitacoes.id) >= 1
+ order by count( solicitacoes.id) desc;
 
 
 -- 3) Quantos clientes o sistema tem por cidade
-select cidade, count(id)
-from clientes
-group by cidade;
+ select cidade, count(id)
+ from clientes
+ group by cidade;
 
 
 -- 4) Relatório de solicitações por cidade
-
-
+ select clientes.cidade, count(solicitacoes.id)
+ from solicitacoes
+ inner join clientes 
+ on solicitacoes.cliente_id = clientes.id
+ group by clientes.cidade;
+		
 
 -- 5) Relatório com todos os clientes que fizeram mais de uma solicitação
- select clientes, count(id)
+ select cliente_id, nome, count(id) 
  from solicitacoes
  group by cliente_id
  having count(id) >= 2;
-
-
-
